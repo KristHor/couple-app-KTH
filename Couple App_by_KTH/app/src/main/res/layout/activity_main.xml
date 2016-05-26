@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="350dp"
+        android:id="@+id/editText"
+        android:layout_above="@+id/buttonSend"
+        android:layout_alignEnd="@+id/imageProfile" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_dark"
+        android:text="SEND"
+        android:id="@+id/buttonSend"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickSend"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_dark"
+        android:layout_alignParentRight="true"
+        android:text="Delete"
+        android:id="@+id/button2"
+        android:layout_above="@+id/editText"
+        android:layout_alignEnd="@+id/editText"
+        android:onClick="onClickDeleteAll"
+        android:layout_marginRight="10dp" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageProfile"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
+        android:src="@drawable/logo" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_green_dark"
+        android:layout_alignParentRight="true"
+        android:text="Change"
+        android:id="@+id/btnCamReTake"
+        android:layout_below="@+id/imageProfile"
+        android:layout_alignStart="@+id/button2"
+        android:onClick="startCamera"
+        android:layout_alignParentEnd="false"
+        android:layout_margin="10dp" />
+
+    <ListView
+        android:layout_width="200dp"
+        android:layout_height="190dp"
+        android:id="@+id/listViewMes"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/editText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:text="Name"
+        android:id="@+id/textViewName"
+        android:textSize="40dp"
+        android:textStyle="bold|italic"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_alignTop="@+id/imageProfile"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>
