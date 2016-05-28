@@ -9,6 +9,8 @@ import android.content.IntentFilter;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.BatteryManager;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
@@ -34,8 +36,8 @@ public class Notification extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        messageThread();
-        BatteryLevel();
+        messageNotify();
+        CheckBatteryLevel();
 
         notification = new NotificationCompat.Builder(this);
         notification.setAutoCancel(true);
@@ -66,7 +68,36 @@ public class Notification extends IntentService {
 
     }
 
-    void BatteryLevel() {
+    Handler handler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            BatteryLevel();
+        }
+    };
+
+    public void CheckBatteryLevel(){
+
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                long futureTime = System.currentTimeMillis() + 10000;
+                while (System.currentTimeMillis() < futureTime){
+                    synchronized (this){
+                        try {
+                            wait(futureTime-System.currentTimeMillis());
+                        }catch (Exception e){}
+                    }
+                }
+                handler.sendEmptyMessage(0);
+            }
+        };
+Thread batteryThread = new Thread(r);
+        batteryThread.start();
+
+    }
+
+    public void BatteryLevel() {
 
         registerReceiver(this.batteryInformationReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
@@ -77,13 +108,14 @@ public class Notification extends IntentService {
         public void onReceive(Context context, Intent intent) {
             // TODO Auto-generated method stub
             int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-            if (level < 10) {
-                build(Integer.toString(level));
+            if (level  < 50) {
+                build("Your battery level is: " + Integer.toString(level));
             }
         }
     };
 
-    public void messageThread() {
+
+    public void messageNotify() {
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("event"));
