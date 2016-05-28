@@ -81,7 +81,7 @@ public class Notification extends IntentService {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                long futureTime = System.currentTimeMillis() + 10000;
+                long futureTime = System.currentTimeMillis() + 100000;
                 while (System.currentTimeMillis() < futureTime){
                     synchronized (this){
                         try {
